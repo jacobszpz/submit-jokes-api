@@ -6,5 +6,19 @@ import { CreateJokeDto } from './dto/create-joke.dto';
 export class JokesController {
   constructor(private readonly jokesService: JokesService) {}
 
-
+  @Post('submit')
+  async create(@Body() createJokeDto: CreateJokeDto) {
+    const newJoke = this.jokesService.create(createJokeDto);
+    if (newJoke) {
+      return {
+        statusCode: 200,
+        message: 'Operation succeeded'
+      };
+    } else {
+      return {
+        statusCode: 500,
+        message: 'Operation failed'
+      };
+    }
+  }
 }
