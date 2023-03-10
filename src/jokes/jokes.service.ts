@@ -16,4 +16,12 @@ export class JokesService {
   async findAll(): Promise<Joke[]> {
     return this.jokeModel.find().exec();
   }
+
+  async oldest(): Promise<Joke> {
+    return this.jokeModel.findOne().sort({ createdAt: 1 }).exec();
+  }
+
+  async deleteOldest(): Promise<Joke> {
+    return this.jokeModel.findOneAndDelete({}, { sort: { createdAt: 1 } }).exec();
+  }
 }
